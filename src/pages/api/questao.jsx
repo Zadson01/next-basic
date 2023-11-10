@@ -1,13 +1,28 @@
-export default function questao(){
+import { useEffect } from "react";
+import { useState } from "react";
 
-    fetch('http://localhost:4077/api/questao/1020')//Testar a chamada a API isso vai retornar uma promessa, na respota vai ter um método json, que vai trazer a respota
-    //ele também vai retornar uma promessa.
-    .then(resp => resp.json())// Aqui vai chegar a respota, que contem um método json
-    .then(json => console.log(json))// aqui pega o Json recebido do back-and é mostrar
-    return(
+const LoadingSpinner = () => {
+    return <div>Carregando...</div>;
+};
+export default function questao() {
+    const [questao, setQuestao] = useState("");
+
+    useEffect(() => {
+        fetch('http://localhost:4077/api/questao/1020')
+            .then(resp => resp.json())
+            .then(questao => setQuestao(questao));
+
+    }, []);
+    if (!questao) {
+        return <LoadingSpinner />;
+    }
+    return (
         <div>
-            questao
+            <h1>Questão</h1>
+            <div>
+                <span>{questao.enuciado}</span>
+            </div>
         </div>
-    )
+    );
 
 }
