@@ -1,9 +1,6 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const LoadingSpinner = () => {
-    return <div>Carregando...</div>;
-};
+
 export default function questao() {
     const [questao, setQuestao] = useState("");
 
@@ -11,16 +8,15 @@ export default function questao() {
         fetch('http://localhost:4077/api/questao/1020')
             .then(resp => resp.json())
             .then(questao => setQuestao(questao));
-
     }, []);
-    if (!questao) {
-        return <LoadingSpinner />;
-    }
+ 
     return (
         <div>
             <h1>Questão</h1>
+            <h1>teste</h1>
             <div>
-                <span>{questao.enuciado}</span>
+                <span>{questao.pergunta}</span>
+                <span>{questao.respotas}</span>
             </div>
         </div>
     );
